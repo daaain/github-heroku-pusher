@@ -24,7 +24,7 @@ module GitPusher
         g.remote('origin').merge
       end
     rescue ArgumentError => e
-      `rm -r #{local_folder}`
+      `rm -r #{local_folder}` rescue nil
       wrapped_clone(github_url, local_folder)
       retry
     end
@@ -41,7 +41,7 @@ module GitPusher
 
   def wrapped_push(repo, remote='heroku', branch='master')
     wrapper = GitSSHWrapper.new(:private_key_path => '~/.ssh/id_rsa')
-    `cd #{repo.dir}; env #{wrapper.git_ssh} git push -f #{remote} #{branch}`
+    puts `cd #{repo.dir}; env #{wrapper.git_ssh} git push -f #{remote} #{branch}`
   ensure
     wrapper.unlink
   end

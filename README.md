@@ -18,7 +18,7 @@ But first, generate a keypair with `ssh-keygen -t rsa -f ~/path/to/a/tmp-dir/id_
 
 Next, we can set up the app in Heroku:
 
-    git clone git://github.com/ajlai/github-heroku-pusher.git
+    git clone git://github.com/himynameisjonas/github-heroku-pusher.git
     cd github-heroku-pusher
     heroku create --stack cedar
     git push heroku master

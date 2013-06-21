@@ -18,7 +18,7 @@ But first, generate a keypair with `ssh-keygen -t rsa -f ~/path/to/a/tmp-dir/id_
 
 Next, we can set up the app in Heroku:
 
-    git clone git://github.com/himynameisjonas/github-heroku-pusher.git
+    git clone git://github.com/maccman/github-heroku-pusher.git
     cd github-heroku-pusher
     heroku create --stack cedar
     git push heroku master
@@ -31,8 +31,6 @@ Try pushing a commit to master on your github repo, and watch Heroku redeploy th
 
 TODO
 ====
-*   Clean up this README
-*   Get private repos working
-*   Speed up cloning (git clone via http is slow as molasses, let's use git://)
-*   Support for multiple repo monitoring
-*   Test cases
+* Speed up cloning (git clone via http is slow as molasses, let's use git://)
+* Support for multiple repo monitoring
+* Test cases

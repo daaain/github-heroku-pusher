@@ -4,7 +4,7 @@ require 'git'
 require 'heroku'
 
 get '/' do
-  "Hello, world"
+  'Hello, world - I am a deployer.'
 end
 
 get '/public_key' do
@@ -18,20 +18,17 @@ end
 
 get '/nuke-repos' do
   `rm -r repos`
-  "nuked!"
+  'Nuked!'
 end
 
 get '/force-push' do
   GitPusher.deploy(ENV['GITHUB_REPO'])
-  "Success!"
+  'Success!'
 end
 
 post '/post-receive' do
   data = JSON.parse(params[:payload])
-  # if data["repository"]["private"]
-  #   "freak out"
-  # end
-  url = data["repository"]["url"]
+  url  = data['repository']['url']
   GitPusher.deploy(url)
   "Success!"
 end

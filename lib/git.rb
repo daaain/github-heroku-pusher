@@ -1,21 +1,23 @@
-needs('GITHUB_REPO', 'HEROKU_REPO')
+require 'git-ssh-wrapper'
+require 'git'
+require 'uri'
 
-module GitPusher
-  require 'git-ssh-wrapper'
-  require 'git'
-  extend self
+needs('GITHUB_REPO', 'HEROKU_REPO', 'HEROKU_BRANCH')
 
-  def deploy(github_url)
-    unless github_url.split("/").last(2).join("/") == ENV['GITHUB_REPO'].split(":").last.gsub(".git","")
-      raise "Incorrect URL Provided #{github_url}"
-    end
+module GitPusher extend self
+  def deploy(url)
+    repo = open_or_setup(
+      ENV['GITHUB_REPO']
+    )
 
-    repo = open_or_setup(ENV['GITHUB_REPO'])
-    wrapped_push(repo)
+    wrapped_push(
+      repo,
+      'heroku',
+      ENV['HEROKU_BRANCH']
+    )
   end
 
   def open_or_setup(github_url)
-
     local_folder = "repos/#{Zlib.crc32(github_url)}"
 
     repo = begin
@@ -28,7 +30,11 @@ module GitPusher
       wrapped_clone(github_url, local_folder)
       retry
     end
-    repo.add_remote('heroku', ENV['HEROKU_REPO']) unless repo.remote('heroku').url
+
+    unless repo.remote('heroku').url
+      repo.add_remote('heroku', ENV['HEROKU_REPO'])
+    end
+
     repo
   end
 
@@ -39,9 +45,9 @@ module GitPusher
     wrapper.unlink
   end
 
-  def wrapped_push(repo, remote='heroku', branch='master')
+  def wrapped_push(repo, remote = 'heroku', branch = 'master')
     wrapper = GitSSHWrapper.new(:private_key_path => '~/.ssh/id_rsa')
-    puts `cd #{repo.dir}; env #{wrapper.git_ssh} git push -f #{remote} #{branch}`
+    puts `cd #{repo.dir}; env #{wrapper.git_ssh} git push -f #{remote} #{branch}:master`
   ensure
     wrapper.unlink
   end
@@ -50,5 +56,4 @@ module GitPusher
     repo = open_or_setup(github_url)
     repo.object('HEAD')
   end
-
 end

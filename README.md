@@ -7,10 +7,11 @@ Setup
 
 In order for the pusher to run, we need to set these six variables:
 
-But first, generate a keypair with `ssh-keygen -t rsa -f ~/path/to/a/tmp-dir/id_rsa 2>&1`
+But first, generate a keypair with `ssh-keygen -t rsa -f ~/path/to/a/tmp-dir/id_rsa 2>&1` (this will be added to your Heroku SSH keys)
 
-*   HEROKU_USERNAME
-*   HEROKU\_API_KEY (Found at the bottom of the [account page](https://api.heroku.com/account))
+*   HEROKU_USERNAME (Example: you@email.com)
+*   HEROKU_BRANCH (Example: master)
+*   HEROKU_API_KEY (Found at the bottom of the [account page](https://api.heroku.com/account))
 *   GITHUB_REPO (Example: git@github.com:ajlai/Test.git)
 *   HEROKU_REPO (Example: git@heroku.com:smooth-sword-2980.git)
 *   PUBLIC_KEY (contents of the id_rsa.pub file generated above)
@@ -23,7 +24,7 @@ Next, we can set up the app in Heroku:
     heroku create --stack cedar
     git push heroku master
 
-Now, set up the variables from earlier under Heroku's [config vars](http://devcenter.heroku.com/articles/config-vars):
+Now, set up the variables from earlier under Heroku's [config vars](http://devcenter.heroku.com/articles/config-vars): `heroku config:set HEROKU_BRANCH=master` and so on
 
 Finally, set up the post-receive url to point to YOUR_APP/post-receive (Example: http://severe-dusk-3039.herokuapp.com/post-receive)
 

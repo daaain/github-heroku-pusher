@@ -12,7 +12,7 @@ But first, generate a keypair with `ssh-keygen -t rsa -f ~/path/to/a/tmp-dir/id_
 *   HEROKU_USERNAME (Example: you@email.com)
 *   HEROKU_BRANCH (Example: master)
 *   HEROKU_API_KEY (Found at the bottom of the [account page](https://api.heroku.com/account))
-*   GITHUB_REPO (Example: git@github.com:ajlai/Test.git)
+*   GITHUB_REPO (Example: https://#{github_oauth_token}:x-oauth-basic@github.com/me/my_repo.git)
 *   HEROKU_REPO (Example: git@heroku.com:smooth-sword-2980.git)
 *   PUBLIC_KEY (contents of the id_rsa.pub file generated above)
 *   PRIVATE_KEY (contents of the id_rsa file generated above)
